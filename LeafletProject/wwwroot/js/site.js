@@ -26,12 +26,13 @@ document.getElementById("btn-toggle").addEventListener("click",
         const leftPanel = document.getElementById('left-panel');
         const map = document.getElementById('map');
 
-        if (leftPanel.style.width === '7%') {
-            leftPanel.style.width = '10%';
-            map.style.width = '90%';
+        if (leftPanel.style.width === '6.5%') {
+            leftPanel.style.width = '13%';
+            map.style.width = '87%';
         } else {
-            leftPanel.style.width = '7%';
-            map.style.width = '93%';
+            leftPanel.style.width = '6.5%';
+            map.style.width = '93.5%';
+            
         }
     });
 var resetButton = document.getElementById("btn-reset");
@@ -81,19 +82,28 @@ function AddMarker() {
 
 }
 
-var geoJsonContent;
 var geojsonButton = document.getElementById("btn-opengeojson");
-geojsonButton.addEventListener('click',function geojsonReader(event) {
+geojsonButton.addEventListener('change', function geojsonReader(e) {
 
-        var selectedFile = event.target.files[0];
+        var selectedFile = e.target.files[0];
         if (!selectedFile) {
             return;
         }
         var reader = new FileReader();
-        reader.onload = function (e) {
-            geoJsonContent = e.target.result;
+    reader.onload = function (e) {
+        geoJsonContent = e.target.files[0];
         }
-        reader.readAsText(selectedFile);
+    reader.readAsText(selectedFile);
+
+    if (selectedFile != undefined) {
+        L.geoJSON(selectedFile, {
+            style: function (feature) {
+                return {color: feature.properties.color };
+            }
+        }).bindPopup(function (layer) {
+            return layer.feature.properties.description;
+        }).addTo(map);
+    }
 
     });
 

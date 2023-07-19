@@ -25,13 +25,13 @@ body {
     position: fixed;
     float: left;
     height: 100vh;
-    width: 10%;
+    width: 13%;
     transition: width 0.3s ease; /* Genişlik değişimini animasyonlu hale getiriyoruz */
 }
 
 #map {
     float: right;
-    width: 90%;
+    width: 87%;
     height: 100vh;
     transition: width 0.3s ease; /* Genişlik değişimini animasyonlu hale getiriyoruz */
 }
@@ -41,4 +41,7 @@ body {
     border-color: #0E6EFD;
     border-radius: 3px 4px;
     color: black;
+}
+#btn-opengeojson {
+    overflow:hidden;
 }
