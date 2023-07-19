@@ -32,7 +32,7 @@ document.getElementById("btn-toggle").addEventListener("click",
         } else {
             leftPanel.style.width = '6.5%';
             map.style.width = '93.5%';
-            
+
         }
     });
 var resetButton = document.getElementById("btn-reset");
@@ -81,29 +81,23 @@ function DeleteMarker() {
 function AddMarker() {
 
 }
-
-var geojsonButton = document.getElementById("btn-opengeojson");
-geojsonButton.addEventListener('change', function geojsonReader(e) {
-
-        var selectedFile = e.target.files[0];
-        if (!selectedFile) {
-            return;
-        }
-        var reader = new FileReader();
+var geoJsonContent;
+document.getElementById("btn-opengeojson").addEventListener('change', function (e) {
+    var selectedFile = e.target.files[0];
+    if (!selectedFile) {
+        return;
+    }
+    var reader = new FileReader();
     reader.onload = function (e) {
-        geoJsonContent = e.target.files[0];
-        }
-    reader.readAsText(selectedFile);
+        geoJsonContent = JSON.parse(e.target.result);
 
-    if (selectedFile != undefined) {
-        L.geoJSON(selectedFile, {
+        L.geoJSON(geoJsonContent, {
             style: function (feature) {
-                return {color: feature.properties.color };
+                return { color: feature.properties.color || 'blue' };
             }
         }).bindPopup(function (layer) {
             return layer.feature.properties.description;
         }).addTo(map);
-    }
-
-    });
-
+    };
+    reader.readAsText(selectedFile);
+});
