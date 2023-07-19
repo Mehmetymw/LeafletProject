@@ -83,17 +83,17 @@ function AddMarker() {
 
 var geoJsonContent;
 var geojsonButton = document.getElementById("btn-opengeojson");
-geojsonButton.addEventListener('click', );
+geojsonButton.addEventListener('click',function geojsonReader(event) {
 
-function geojsonReader (event) {
-    var selectedFile = event.target.files[0];
-    if (!selectedFile) {
-        return;
-    }
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        geoJsonContent = e.target.result;
-    }
-    reader.readAsText(selectedFile);
+        var selectedFile = event.target.files[0];
+        if (!selectedFile) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            geoJsonContent = e.target.result;
+        }
+        reader.readAsText(selectedFile);
 
-}
+    });
+
