@@ -21,20 +21,31 @@ var handleDrawClickListener = document.addEventListener("click", function () {
     else
         map.off("click", handleDrawClcik);
 })
+const leftPanel = document.getElementById('left-panel');
+
 document.getElementById("btn-toggle").addEventListener("click",
     function () {
-        const leftPanel = document.getElementById('left-panel');
-        const map = document.getElementById('map');
+        var btns = document.getElementsByClassName("leftpanel-btn");
 
-        if (leftPanel.style.width === '6.5%') {
-            leftPanel.style.width = '13%';
-            map.style.width = '87%';
+        if (leftPanel.style.width === '6%') {
+            leftPanel.style.width = '300px';
+            leftPanel.style.height = '250px';
+
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].style.display = 'block';
+            }
         } else {
-            leftPanel.style.width = '6.5%';
-            map.style.width = '93.5%';
-
+            leftPanel.style.width = '6%';
+            leftPanel.style.height = '6%';
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].style.display = 'none';
+            }
         }
+
     });
+function togglePanel() {
+    leftPanel.classList.toggle('hidden');
+}
 var resetButton = document.getElementById("btn-reset");
 resetButton.addEventListener('click', function () {
     // Çizimleri sıfırlamak için tüm katmanları temizle

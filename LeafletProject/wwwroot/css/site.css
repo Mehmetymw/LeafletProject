@@ -20,20 +20,38 @@ html {
 body {
     margin-bottom: 60px;
 }
-
-#left-panel {
-    position: fixed;
-    float: left;
-    height: 100vh;
-    width: 13%;
-    transition: width 0.3s ease; /* Genişlik değişimini animasyonlu hale getiriyoruz */
+#btn-draw{
+    width:270px
 }
-
+#left-panel {
+    height: 250px;
+    width: 300px;
+    position: absolute;
+    top: 100px;
+    left: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 #map {
-    float: right;
-    width: 87%;
+    float: left;
+    width: 100%;
     height: 100vh;
-    transition: width 0.3s ease; /* Genişlik değişimini animasyonlu hale getiriyoruz */
+    transition: width 0.3s ease; 
+}
+.leftpanel-btn.hidden{
+    width: 0;
 }
 
 #btn-toggle {
@@ -41,6 +59,7 @@ body {
     border-color: #0E6EFD;
     border-radius: 3px 4px;
     color: black;
+
 }
 #btn-opengeojson {
     overflow:hidden;
