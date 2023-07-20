@@ -7,7 +7,28 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var coordList = [];
 var polygon;
+var polyline;
 var isClickEnabled = false;
+
+
+
+var handleDrawClickListener = document.addEventListener("click", function () {
+    if (isClickEnabled) {
+        enabledBtns();
+        if (clickedBtn != undefined) {
+
+            map.on("click", handleDraw);
+
+        }
+    }
+
+    else {
+        disableBtns();
+        map.off("click", handlePolygon);
+    }
+})
+
+
 
 var editButton = document.getElementById("btn-draw");
 editButton.addEventListener("click", function () {
@@ -15,12 +36,6 @@ editButton.addEventListener("click", function () {
     editButton.innerHTML = isClickEnabled ? "Stop" : "Edit";
 })
 
-var handleDrawClickListener = document.addEventListener("click", function () {
-    if (isClickEnabled)
-        map.on("click", handleDrawClcik);
-    else
-        map.off("click", handleDrawClcik);
-})
 const leftPanel = document.getElementById('left-panel');
 
 document.getElementById("btn-toggle").addEventListener("click",
@@ -47,22 +62,54 @@ function togglePanel() {
     leftPanel.classList.toggle('hidden');
 }
 var btns = document.getElementsByClassName("editpanel-btn");
-function disableBtns(btn){
-    
+disableBtns();
+
+function disableBtns() {
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].style.display = 'none';
+    }
 }
 
-document.getElementById("editpanel-Polygon").addEventListener('click',function () {
+function enabledBtns() {
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].style.display = 'block';
+    }
+}
 
+var clickedBtn;
+
+var polygonBtn = document.getElementById("editpanel-Polygon");
+polygonBtn.addEventListener('click', function () {
+    clearMap();
+    clickedBtn = polygonBtn;
 });
+
+var polylineBtn = document.getElementById("editpanel-Polyline");
 document.getElementById("editpanel-Polyline").addEventListener('click', function () {
-
+    clearMap();
+    clickedBtn = polylineBtn;
 });
+
+var pointBtn = document.getElementById("editpanel-Point");
 document.getElementById("editpanel-Point").addEventListener('click', function () {
-
+    clearMap();
+    clickedBtn = pointBtn;
 });
+
+var popupBtn = document.getElementById("editpanel-Popup");
 document.getElementById("editpanel-Popup").addEventListener('click', function () {
+    clearMap();
+    clickedBtn = popupBtn;
 
 });
+
+function clearMap() {
+    coordList = [];
+
+    map.off("click", handleDraw);
+
+}
+
 activeBtn = document.getElementById("")
 var resetButton = document.getElementById("btn-reset");
 resetButton.addEventListener('click', function () {
@@ -78,12 +125,12 @@ resetButton.addEventListener('click', function () {
     polygon = undefined;
     editButton.innerHTML = "Edit";
     isClickEnabled = false;
-
+    clickedBtn = undefined;
 
 });
 
 var marker;
-function handleDrawClcik(e) {
+function handleDraw(e) {
     var lat = e.latlng.lat;
     var lng = e.latlng.lng;
     var latLngArray = [lat, lng];
@@ -92,8 +139,30 @@ function handleDrawClcik(e) {
     marker.bindPopup(latLngArray + ' ' + "Noktasına Tıkladınız").openPopup();
     coordList.push(latLngArray);
 
-    CreatePolygon();
+    if (clickedBtn != undefined) {
+        switch (clickedBtn) {
+            case polygonBtn:
+                CreatePolygon();
+                break;
+            case polylineBtn:
+                CreatePolyline();
+                break;
+            case pointBtn:
+                var marker = L.marker(latLngArray).addTo(map);
+
+                break;
+            case popupBtn:
+                var popup = L.popup()
+                    .setLatLng(latLngArray)
+                    .openPopup();
+
+
+                break;
+        }
+
+    }
 }
+
 function CreatePolygon() {
     if (coordList.length > 2) {
         if (typeof polygon !== 'undefined') {
@@ -102,6 +171,16 @@ function CreatePolygon() {
         polygon = L.polygon(coordList, { color: 'red' }).addTo(map);
     }
 }
+
+function CreatePolyline() {
+    if (coordList.length > 2) {
+        if (typeof polyline !== 'undefined') {
+            map.removeLayer(polyline);
+        }
+        polyline = L.polyline(coordList, { color: 'red' }).addTo(map);
+    }
+}
+
 
 function DeleteMarker() {
     marker.remove();
