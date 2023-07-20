@@ -9,37 +9,44 @@
 </head>
 <body>
 
-   <div id="left-panel" class="d-flex flex-column flex-shrink-0 p-3 bg-light">
-            <button id="btn-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+    <div id="left-panel" class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+        <button id="btn-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li>
-                    <a id="btn-draw" href="#" class="leftpanel-btn nav-link active" aria-current="page">
-                        Draw
-                    </a>
-                </li>
-                <li>
-                    <a id="btn-reset" href="#" class="leftpanel-btn nav-link link-dark">
-                        Reset
-                    </a>
-                </li>
-                <li>
-                    <a id="btn-info" href="#" class="leftpanel-btn nav-link link-dark">
-                        Info
-                    </a>
-                </li>
-                <li>
-                    <input type="file" id="btn-opengeojson" href="#" class="leftpanel-btn nav-link link-dark" action="get" accept=".json" />
-                </li>
-            </ul>
-        </div>
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <a id="btn-draw" href="#" class="leftpanel-btn nav-link active" aria-current="page">
+                    Draw
+                </a>
+            </li>
+            <li>
+                <a id="btn-reset" href="#" class="leftpanel-btn nav-link link-dark">
+                    Reset
+                </a>
+            </li>
+            <li>
+                <a id="btn-info" href="#" class="leftpanel-btn nav-link link-dark">
+                    Info
+                </a>
+            </li>
+            <li>
+                <input type="file" id="btn-opengeojson" href="#" class="leftpanel-btn nav-link link-dark" action="get" accept=".json" />
+            </li>
+        </ul>
+    </div>
     <div id="map">
-        
+    </div>
+
+    <div id="edit-panel" class="nav nav-pills nav-justified">
+        <button id="editpanel-Polygon" type="button" class="editpanel-btn btn btn-secondary">Polygon</button>
+        <button id="editpanel-Polyline" type="button" class="editpanel-btn btn btn-secondary">Polyline</button>
+        <button id="editpanel-Point" type="button" class="editpanel-btn btn btn-secondary">Point</button>
+        <button id="editpanel-Popup" type="button" class="editpanel-btn btn btn-secondary">Popup</button>
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="~/js/site.js">

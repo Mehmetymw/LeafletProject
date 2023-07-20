@@ -46,6 +46,24 @@ document.getElementById("btn-toggle").addEventListener("click",
 function togglePanel() {
     leftPanel.classList.toggle('hidden');
 }
+var btns = document.getElementsByClassName("editpanel-btn");
+function disableBtns(btn){
+    
+}
+
+document.getElementById("editpanel-Polygon").addEventListener('click',function () {
+
+});
+document.getElementById("editpanel-Polyline").addEventListener('click', function () {
+
+});
+document.getElementById("editpanel-Point").addEventListener('click', function () {
+
+});
+document.getElementById("editpanel-Popup").addEventListener('click', function () {
+
+});
+activeBtn = document.getElementById("")
 var resetButton = document.getElementById("btn-reset");
 resetButton.addEventListener('click', function () {
     // Çizimleri sıfırlamak için tüm katmanları temizle

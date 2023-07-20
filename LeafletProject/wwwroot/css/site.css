@@ -23,6 +23,17 @@ body {
 #btn-draw{
     width:270px
 }
+.editpanel-btn{
+    display:block;
+    margin:2px;
+    
+}
+#edit-panel {
+    padding: 50px 0px 0px 42.5%;
+    width: auto;
+    z-index: 1000;
+    position: fixed;
+}
 #left-panel {
     height: 250px;
     width: 300px;
