@@ -29,14 +29,46 @@
                 </a>
             </li>
             <li>
-                <a id="btn-info" href="#" class="leftpanel-btn nav-link link-dark">
-                    Info
+                <a id="btn-layers" href="#" class="leftpanel-btn nav-link link-dark">
+                    Layers
                 </a>
             </li>
             <li>
                 <input type="file" id="btn-opengeojson" href="#" class="leftpanel-btn nav-link link-dark" action="get" accept=".json" />
             </li>
         </ul>
+    </div>
+    <div id="layer-panel" >
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="cbIl" checked>
+            <label class="form-check-label" for="cbIl">
+                İl Sınrı
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="cbIlce">
+            <label class="form-check-label" for="cbIlce">
+                İlçe Sınrı
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="cbKoy">
+            <label class="form-check-label" for="cbKoy">
+                Köy Sınrı
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="cbMah">
+            <label class="form-check-label" for="cbMah">
+                Mahalle Sınırı
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="cbUs">
+            <label class="form-check-label" for="cbUs">
+                US
+            </label>
+        </div>
     </div>
     <div id="map">
     </div>
@@ -48,6 +80,8 @@
         <button id="editpanel-Popup" type="button" class="editpanel-btn btn btn-secondary">Popup</button>
 
     </div>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="~/js/site.js">
     </script>

@@ -29,11 +29,13 @@ body {
     
 }
 #edit-panel {
-    padding: 50px 0px 0px 42.5%;
+    left:50px;
+    padding: 50px 0px 0px 40%;
     width: auto;
     z-index: 1000;
     position: fixed;
 }
+
 #left-panel {
     height: 250px;
     width: 300px;
@@ -74,4 +76,24 @@ body {
 }
 #btn-opengeojson {
     overflow:hidden;
+}
+
+#layer-panel {
+    height: 145px;
+    width: 160px;
+    position: fixed;
+    top: 800px;
+    left: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display:block;
+}
+#layer-panel.hidden{
+    display:none;
+}
+.form-check-label{
+    user-select:none;
 }

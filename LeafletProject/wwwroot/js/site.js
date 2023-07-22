@@ -1,4 +1,4 @@
-﻿var map = L.map('map').setView([51.505, -0.09], 5);
+﻿var map = L.map('map').setView([-40, 146], 5);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -16,15 +16,13 @@ var handleDrawClickListener = document.addEventListener("click", function () {
     if (isClickEnabled) {
         enabledBtns();
         if (clickedBtn != undefined) {
-
             map.on("click", handleDraw);
-
         }
     }
 
     else {
         disableBtns();
-        map.off("click", handlePolygon);
+        map.off("click", handleDraw);
     }
 })
 
@@ -115,7 +113,7 @@ var resetButton = document.getElementById("btn-reset");
 resetButton.addEventListener('click', function () {
     // Çizimleri sıfırlamak için tüm katmanları temizle
     map.eachLayer(function (layer) {
-        if (layer instanceof L.Polygon || layer instanceof L.Marker) {
+        if (layer instanceof L.Polygon || layer instanceof L.Polyline || layer instanceof L.Point || layer instanceof L.Marker) {
             map.removeLayer(layer);
         }
     });
@@ -135,8 +133,8 @@ function handleDraw(e) {
     var lng = e.latlng.lng;
     var latLngArray = [lat, lng];
 
-    marker = new L.marker([lat, lng]).addTo(map);
-    marker.bindPopup(latLngArray + ' ' + "Noktasına Tıkladınız").openPopup();
+    //marker = new L.marker([lat, lng]).addTo(map);
+    //marker.bindPopup(latLngArray + ' ' + "Noktasına Tıkladınız").openPopup();
     coordList.push(latLngArray);
 
     if (clickedBtn != undefined) {
@@ -149,14 +147,25 @@ function handleDraw(e) {
                 break;
             case pointBtn:
                 var marker = L.marker(latLngArray).addTo(map);
-
                 break;
             case popupBtn:
-                var popup = L.popup()
-                    .setLatLng(latLngArray)
-                    .openPopup();
+                var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        var popupContent = data.display_name;
 
+                        var popup = L.popup()
+                            .setContent(popupContent)
+                            .setLatLng(latLngArray)
+                            .openPopup().addTo(map);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+                
 
+             
                 break;
         }
 
@@ -173,14 +182,13 @@ function CreatePolygon() {
 }
 
 function CreatePolyline() {
-    if (coordList.length > 2) {
+    if (coordList.length > 1) {
         if (typeof polyline !== 'undefined') {
             map.removeLayer(polyline);
         }
         polyline = L.polyline(coordList, { color: 'red' }).addTo(map);
     }
 }
-
 
 function DeleteMarker() {
     marker.remove();
@@ -189,6 +197,7 @@ function DeleteMarker() {
 function AddMarker() {
 
 }
+
 var geoJsonContent;
 document.getElementById("btn-opengeojson").addEventListener('change', function (e) {
     var selectedFile = e.target.files[0];
@@ -209,3 +218,124 @@ document.getElementById("btn-opengeojson").addEventListener('change', function (
     };
     reader.readAsText(selectedFile);
 });
+
+var layerPanel = document.getElementById("layer-panel");
+var layersButton = document.getElementById("btn-layers").addEventListener("click", function () {
+    layerPanel.classList.toggle('hidden');
+})
+
+//LAYER LIST
+var cbIl = document.getElementById("cbIl");
+var cbIlce = document.getElementById("cbIlce");
+var cbKoy = document.getElementById("cbKoy");
+var cbMah = document.getElementById("cbMah");
+var cbUs = document.getElementById("cbUs");
+
+document.addEventListener("DOMContentLoaded", function () {
+    checkCBstatus();    
+});
+
+var checkBtns = document.getElementsByClassName("form-check");
+for (var i = 0; i < checkBtns.length; i++) {
+    checkBtns[i].addEventListener('change', function () {
+        checkCBstatus();
+        i = checkBtns.length;
+    });
+}
+
+var CityBorder = undefined;
+var CountyBorder = undefined
+var VillageBorder = undefined;
+var NBBorder = undefined;
+var USBorder = undefined;
+
+var layerMapping = {};
+
+var CityLayerName;
+var CountyLayerName;
+var VillageLayerName;
+var NBLayerName;
+var USLayerName;
+
+function checkCBstatus() {
+
+    if (cbIl.checked) {
+        CityLayerName = topp + 'tasmania_state_boundaries';
+        if (layerMapping[CityLayerName] == null) {
+            CityBorder = getMap(CityLayerName);
+            layerMapping[CityLayerName] = CityBorder;
+        }        
+    }
+    else {
+        delete layerMapping[CityLayerName];
+        removFromMap(CityBorder)
+    }
+    if (cbIlce.checked) {
+        CountyLayerName = topp + 'tasmania_water_bodies'; 
+
+        if (layerMapping[CountyLayerName] == null) {
+            CountyBorder = getMap(CountyLayerName);
+            layerMapping[CountyLayerName] = CountyBorder;
+        }
+    }
+    else {
+        delete layerMapping[CountyLayerName];
+        removFromMap(CountyBorder)
+    }
+    if (cbKoy.checked) {
+        VillageLayerName = topp + 'tasmania_roads';
+
+        if (layerMapping[VillageLayerName] == null) {
+            VillageBorder = getMap(VillageLayerName);
+            layerMapping[VillageLayerName] = VillageBorder;
+        }
+    }
+    else {
+        delete layerMapping[VillageLayerName];
+        removFromMap(VillageBorder)
+    }
+    if (cbMah.checked) {
+       NBLayerName = topp + 'tasmania_cities';
+
+        if (layerMapping[NBLayerName] == null) {
+            NBBorder = getMap(NBLayerName);
+            layerMapping[NBLayerName] = NBBorder;
+        }
+    }
+    else {
+        delete layerMapping[NBLayerName];
+        removFromMap(NBBorder)
+    }
+    if (cbUs.checked) {
+        USLayerName = topp + 'states';
+
+        if (layerMapping[USLayerName] == null) {
+            USBorder = getMap(USLayerName);
+            layerMapping[USLayerName] = USBorder;
+        }
+    }
+    else {
+        delete layerMapping[USLayerName];
+        removFromMap(USBorder)
+    }
+}
+var topp = 'topp:';
+var baseLayer = undefined;
+
+function getMap(BaseLayerName) {
+ 
+    baseLayer = L.tileLayer.wms('http://localhost:8080/geoserver/topp/wms', {
+        layers: BaseLayerName,
+        format: 'image/png',
+        transparent: true
+    }).addTo(map);
+    return baseLayer;
+}
+
+function removFromMap(border) {
+    if (border != null && border != undefined) {
+        map.removeLayer(border);
+    }
+}
+
+
