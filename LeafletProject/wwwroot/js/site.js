@@ -251,6 +251,7 @@ var USBorder = undefined;
 
 var layerMapping = {};
 
+
 var CityLayerName;
 var CountyLayerName;
 var VillageLayerName;
@@ -338,4 +339,6 @@ function removFromMap(border) {
     }
 }
 
-
+$(function () {
+    $('#left-panel').draggable();
+})
