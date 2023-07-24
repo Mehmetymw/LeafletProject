@@ -163,9 +163,9 @@ function handleDraw(e) {
                     .catch(error => {
                         console.error(error);
                     })
-                
 
-             
+
+
                 break;
         }
 
@@ -232,7 +232,7 @@ var cbMah = document.getElementById("cbMah");
 var cbUs = document.getElementById("cbUs");
 
 document.addEventListener("DOMContentLoaded", function () {
-    checkCBstatus();    
+    checkCBstatus();
 });
 
 var checkBtns = document.getElementsByClassName("form-check");
@@ -265,14 +265,14 @@ function checkCBstatus() {
         if (layerMapping[CityLayerName] == null) {
             CityBorder = getMap(CityLayerName);
             layerMapping[CityLayerName] = CityBorder;
-        }        
+        }
     }
     else {
         delete layerMapping[CityLayerName];
         removFromMap(CityBorder)
     }
     if (cbIlce.checked) {
-        CountyLayerName = topp + 'tasmania_water_bodies'; 
+        CountyLayerName = topp + 'tasmania_water_bodies';
 
         if (layerMapping[CountyLayerName] == null) {
             CountyBorder = getMap(CountyLayerName);
@@ -296,7 +296,7 @@ function checkCBstatus() {
         removFromMap(VillageBorder)
     }
     if (cbMah.checked) {
-       NBLayerName = topp + 'tasmania_cities';
+        NBLayerName = topp + 'tasmania_cities';
 
         if (layerMapping[NBLayerName] == null) {
             NBBorder = getMap(NBLayerName);
@@ -324,7 +324,7 @@ var topp = 'topp:';
 var baseLayer = undefined;
 
 function getMap(BaseLayerName) {
- 
+
     baseLayer = L.tileLayer.wms('http://localhost:8080/geoserver/topp/wms', {
         layers: BaseLayerName,
         format: 'image/png',
@@ -340,5 +340,100 @@ function removFromMap(border) {
 }
 
 $(function () {
-    $('#left-panel').draggable();
+    $('#left-panel').draggable({
+        /*containment: "parent"*/
+    });
+})
+
+function sendDateToGeoServer(data) {
+    fetch('')
+}
+
+map.on("click", function (e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    onGetFeatureInfo(lat, lng);
+});
+
+var Properties;
+function onGetFeatureInfo(lat, lng) {
+    var url = 'http://localhost:8080/geoserver/topp/wms';
+    var params = {
+        service: 'WMS',
+        version: '1.1.1',
+        request: 'GetFeatureInfo',
+        layers: 'topp:states',
+        query_layers: 'topp:states',
+        info_format: 'application/json',
+        srs: 'EPSG:4326',
+        bbox: map.getBounds().toBBoxString(),
+        height: map.getSize().y,
+        width: map.getSize().x,
+        x: Math.floor(map.latLngToContainerPoint([lat, lng]).x),
+        y: Math.floor(map.latLngToContainerPoint([lat, lng]).y)
+    };
+    $.ajax({
+        url: url + L.Util.getParamString(params),
+        dataType: 'json',
+        success: function (data) {
+            for (var i = 0; i < data.features.length; i++) {
+                var feature = data.features[i];
+                Properties = feature.properties;
+
+            }
+           // displayAttrTable(data);
+            sendDataToController(data);
+            console.log(data);
+            console.log(Properties);
+        },
+        error: function (error) {
+            console.log("Ajax Error", error);
+        }
+    });
+}
+
+function displayAttrTable(data){
+    var form = $('#attrForm');
+    form.show();
+
+    var table = $('#attrTable');
+    table.innerHTML = "";
+
+    var headerRow = table.insertRow();
+    var headers = Object.keys(data);
+    for (var i = 0; i < headers.length; i++) {
+        var headerCell = headerRow.insertCell();
+        headerCell.textContent = headers[i];
+    }
+    var dataRow = table.insertRow();
+    for (var i = 0; i < headers.length; i++) {
+        var dataCell = dataRow.insertCell();
+        dataCell.textContent = data[headers[i]];
+    }
+
+}
+
+function sendDataToController(data) {
+    $.ajax({
+        url: '/Home/Properties',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        error: function (error) {
+            console.log("C#",error);
+        }
+        })
+}
+
+$(function () {
+    $('#attrClose').click(function () {
+        $('#attrForm').hide();
+    })
+})
+$(function () {
+    $("#attrForm").draggable();
+   
+})
+$(function () {
+    $("#attrForm").resizable();
 })

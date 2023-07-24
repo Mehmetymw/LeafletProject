@@ -17,7 +17,11 @@ namespace LeafletProject.Controllers
         {
             return View();
         }
-
+        [HttpPost]
+        public IActionResult Properties(string Properties)
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

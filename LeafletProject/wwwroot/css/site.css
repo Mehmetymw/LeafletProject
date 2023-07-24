@@ -97,3 +97,38 @@ body {
 .form-check-label{
     user-select:none;
 }
+#attrForm {
+    display:none;
+    cursor: pointer;
+    user-select: none;
+    top: 200px;
+    left: 42.5%;
+    position: fixed;
+    width: 350px;
+    height: 400px;
+    z-index: 1000;
+    background-color: whitesmoke;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+#attributeTable {
+    cursor: default;
+    background-color: aliceblue;
+    top: 50px;
+    border: 1px solid grey;
+}
+#attrForm button{
+  
+    border-radius:5px;
+    position:inherit;
+    float:right;
+}
+#attrSubmit {
+    display:none;
+    top: 350px;
+    left: 210px;
+}
+#attrClose {
+    top: 350px;
+    left: 280px;
+}
