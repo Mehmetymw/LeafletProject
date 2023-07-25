@@ -5,23 +5,26 @@ using System.Diagnostics;
 namespace LeafletProject.Controllers
 {
     public class HomeController : Controller
-    { 
+    {
         private readonly ILogger<HomeController> _logger;
+        private readonly USData _USData;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _USData = new USData();
         }
-        USData USData = new USData();
-        public IActionResult Index(USData usdata)
+        public IActionResult Index()
         {
-            USData = usdata;
-            return View(USData);
+            return View(_USData);
         }
         [HttpPost]
-        public IActionResult Properties()
+        public IActionResult Properties(USData usdata)
         {
-            return PartialView("Properties", USData);
+            _USData.MALE = usdata.MALE;
+            _USData.FEMALE = usdata.FEMALE;
+
+            return PartialView("Properties", _USData);
         }
         public IActionResult Privacy()
         {
@@ -34,9 +37,5 @@ namespace LeafletProject.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-    public class USData
-    {
-        public string MALE{ get; set; }
-        public string FEMALE { get; set; }
-    }
+    
 }

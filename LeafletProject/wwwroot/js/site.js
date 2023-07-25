@@ -381,7 +381,6 @@ function onGetFeatureInfo(lat, lng) {
                 Properties = feature.properties;
 
             }
-            displayAttrTable(data);
             if (Properties != null) {
                 var Data = {
                     Male: Properties.MALE,
@@ -389,7 +388,7 @@ function onGetFeatureInfo(lat, lng) {
                 }
                 PostData(Data);
                 console.log(data);
-
+                displayAttrTable(Data);
             }
         },
         error: function (error) {
@@ -398,30 +397,37 @@ function onGetFeatureInfo(lat, lng) {
     });
 }
 
-function displayAttrTable(data){
+function displayAttrTable(Data){
     var form = $('#attrForm');
     form.show();
 
     var table = $('#attrTable');
-    table.empty();
 
-    for (var i = 0; data.length; i++) {
-        var rowData = data[i];
-        var rowHtml = '<tr>' +
-            '<th scope="row">' + rowData.Id + '</th>' +
-            '<td>' + rowData.MALE + '</td>' +
-            '<td>' + rowData.FEMALE + '</td>' +
-            '</tr>';
-        table.append(rowHtml);
+    var row = $('<tr>');
+    var col1 = $('<td>').text("#");
+    var col2 = $('<td>').text("Erkek Sayısı");
+    var col3 = $('<td>').text("Kadın Sayısı");
 
-    }
+    row.append(col1);
+    row.append(col2);
+    row.append(col3);
 
+    table.append(row);
 
+    row = $('<tr>');
+    col1 = $('<td>').text("1");
+    col2 = $('<td>').text(Data.Male);
+    col3 = $('<td>').text(Data.Female);
 
+    row.append(col1);
+    row.append(col2);
+    row.append(col3);
+
+    table.append(row);
 }
 
 function PostData(data) {
-    $.post("https://localhost:44334/Home/Index", data);
+    $.post("https://localhost:44334/Home/Properties", data);
 }
 
 
