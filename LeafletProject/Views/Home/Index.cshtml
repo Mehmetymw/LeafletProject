@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using LeafletProject.Controllers;
+@model USData
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Leaflet Harita Örneği</title>
@@ -70,54 +73,9 @@
             </label>
         </div>
     </div>
-   <div id="attrForm">
-        <table id="attributeTable" class="table table-bordered table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Öznitelik</th>
-                    <th scope="col">Öznitelik Değeri</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-            </tbody>
-        </table>
-        <button class="btn-primary" type="submit" name="attSubmit" id="attrSubmit">Kaydet</button>
-        <button class="btn-danger" type="button" name="attrClose" id="attrClose">Kapat</button>
-
-   </div>
    
+        <partial name="Properties" model="Model"></partial>
+    
     <div id="map">
     </div>
 

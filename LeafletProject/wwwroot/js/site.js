@@ -381,10 +381,16 @@ function onGetFeatureInfo(lat, lng) {
                 Properties = feature.properties;
 
             }
-           // displayAttrTable(data);
-            sendDataToController(data);
-            console.log(data);
-            console.log(Properties);
+            displayAttrTable(data);
+            if (Properties != null) {
+                var Data = {
+                    Male: Properties.MALE,
+                    Female: Properties.FEMALE,
+                }
+                PostData(Data);
+                console.log(data);
+
+            }
         },
         error: function (error) {
             console.log("Ajax Error", error);
@@ -397,36 +403,42 @@ function displayAttrTable(data){
     form.show();
 
     var table = $('#attrTable');
-    table.innerHTML = "";
+    table.empty();
 
-    var headerRow = table.insertRow();
-    var headers = Object.keys(data);
-    for (var i = 0; i < headers.length; i++) {
-        var headerCell = headerRow.insertCell();
-        headerCell.textContent = headers[i];
+    for (var i = 0; data.length; i++) {
+        var rowData = data[i];
+        var rowHtml = '<tr>' +
+            '<th scope="row">' + rowData.Id + '</th>' +
+            '<td>' + rowData.MALE + '</td>' +
+            '<td>' + rowData.FEMALE + '</td>' +
+            '</tr>';
+        table.append(rowHtml);
+
     }
-    var dataRow = table.insertRow();
-    for (var i = 0; i < headers.length; i++) {
-        var dataCell = dataRow.insertCell();
-        dataCell.textContent = data[headers[i]];
-    }
+
+
 
 }
 
-function sendDataToController(data) {
-    $.ajax({
-        url: '/Home/Properties',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        error: function (error) {
-            console.log("C#",error);
-        }
-        })
+function PostData(data) {
+    $.post("https://localhost:44334/Home/Index", data);
 }
+
+
+//function sendDataToController(data) {
+//    $.ajax({
+//        url: '/Home/Properties',
+//        type: 'POST',
+//        contentType: 'application/json',
+//        data: JSON.stringify(data),
+//        error: function (error) {
+//            console.log("C#",error);
+//        }
+//        })
+//}
 
 $(function () {
-    $('#attrClose').click(function () {
+    $('#btnAsena').click(function () {
         $('#attrForm').hide();
     })
 })

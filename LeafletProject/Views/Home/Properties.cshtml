@@ -1,0 +1,63 @@
+﻿@using LeafletProject.Controllers;
+@model USData
+@*@if (Model is null)
+    return;*@
+    <style>
+    #attrForm {
+        display:none;
+        cursor: pointer;
+        user-select: none;
+        top: 200px;
+        left: 42.5%;
+        position: fixed;
+        width: 350px;
+        height: 120px;
+        z-index: 1000;
+        background-color: whitesmoke;
+        border: 1px solid grey;
+        border-radius: 5px;
+        
+    }
+
+    #attributeTable {
+        cursor: default;
+        background-color: aliceblue;
+        
+    }
+
+    #attrSubmit {
+        display: none;
+        top: 350px;
+        left: 210px;
+    }
+
+    #btnAsena {
+        border-radius: 5px;
+        bottom:12.82px;
+        width:100px;
+        position:relative;
+        left:245px;
+    }
+    </style>
+<div id="attrForm">
+    <table id="attributeTable" class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Erkek Sayısı</th>
+                <th scope="col">Kadın Sayısı</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>@Model.MALE</td>
+                <td>@Model.FEMALE</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn-danger" type="button" name="attrClose" id="btnAsena">Kapat</button>
+
+    <button class="btn-primary" type="submit" name="attSubmit" id="attrSubmit">Kaydet</button>
+
+</div>
