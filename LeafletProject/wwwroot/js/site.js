@@ -382,13 +382,27 @@ function onGetFeatureInfo(lat, lng) {
 
             }
             if (Properties != null) {
-                var Data = {
-                    Male: Properties.MALE,
-                    Female: Properties.FEMALE,
+                var USData = {
+                    MALE: Properties.MALE,
+                    FEMALE: Properties.FEMALE,
                 }
-                PostData(Data);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Properties",
+                    data: JSON.stringify( USData),
+                    contentType: "application/json",
+                    success: function (data) {
+
+                        $("#attrForm").html(data);
+                    },
+                    error: function () {
+                        alert("Veri çekme işlemi sırasında bir hata oluştu.");
+                    }
+                });
+
                 console.log(data);
-                displayAttrTable(Data);
+                displayAttrTable();
             }
         },
         error: function (error) {
@@ -397,51 +411,12 @@ function onGetFeatureInfo(lat, lng) {
     });
 }
 
-function displayAttrTable(Data){
+function displayAttrTable(){
     var form = $('#attrForm');
     form.show();
 
-    var table = $('#attrTable');
-
-    var row = $('<tr>');
-    var col1 = $('<td>').text("#");
-    var col2 = $('<td>').text("Erkek Sayısı");
-    var col3 = $('<td>').text("Kadın Sayısı");
-
-    row.append(col1);
-    row.append(col2);
-    row.append(col3);
-
-    table.append(row);
-
-    row = $('<tr>');
-    col1 = $('<td>').text("1");
-    col2 = $('<td>').text(Data.Male);
-    col3 = $('<td>').text(Data.Female);
-
-    row.append(col1);
-    row.append(col2);
-    row.append(col3);
-
-    table.append(row);
 }
 
-function PostData(data) {
-    $.post("https://localhost:44334/Home/Properties", data);
-}
-
-
-//function sendDataToController(data) {
-//    $.ajax({
-//        url: '/Home/Properties',
-//        type: 'POST',
-//        contentType: 'application/json',
-//        data: JSON.stringify(data),
-//        error: function (error) {
-//            console.log("C#",error);
-//        }
-//        })
-//}
 
 $(function () {
     $('#btnAsena').click(function () {
@@ -455,3 +430,4 @@ $(function () {
 $(function () {
     $("#attrForm").resizable();
 })
+

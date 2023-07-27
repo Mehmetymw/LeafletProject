@@ -1,6 +1,5 @@
 ﻿@using LeafletProject.Controllers;
-@model USData
-
+@model USData 
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +40,7 @@
             </li>
         </ul>
     </div>
-    <div id="layer-panel" >
+    <div id="layer-panel">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="cbIl" checked>
             <label class="form-check-label" for="cbIl">
@@ -73,25 +72,26 @@
             </label>
         </div>
     </div>
-   
-        <partial name="Properties" model="Model"></partial>
+
+    <partial name="Properties" model="@Model">
     
-    <div id="map">
-    </div>
 
-    <div id="edit-panel" class="nav nav-pills nav-justified">
-        <button id="editpanel-Polygon" type="button" class="editpanel-btn btn btn-secondary">Polygon</button>
-        <button id="editpanel-Polyline" type="button" class="editpanel-btn btn btn-secondary">Polyline</button>
-        <button id="editpanel-Point" type="button" class="editpanel-btn btn btn-secondary">Point</button>
-        <button id="editpanel-Popup" type="button" class="editpanel-btn btn btn-secondary">Popup</button>
+        <div id="map">
+        </div>
 
-    </div>
+        <div id="edit-panel" class="nav nav-pills nav-justified">
+            <button id="editpanel-Polygon" type="button" class="editpanel-btn btn btn-secondary">Polygon</button>
+            <button id="editpanel-Polyline" type="button" class="editpanel-btn btn btn-secondary">Polyline</button>
+            <button id="editpanel-Point" type="button" class="editpanel-btn btn btn-secondary">Point</button>
+            <button id="editpanel-Popup" type="button" class="editpanel-btn btn btn-secondary">Popup</button>
 
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="~/js/site.js">
-    </script>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+        <script src="~/js/site.js">
+        </script>
 
 </body>
 </html>

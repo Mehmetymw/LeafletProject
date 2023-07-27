@@ -2,7 +2,7 @@
 {
     public class USData
     {
-        public string MALE { get; set; }
-        public string FEMALE { get; set; }
+        public long MALE { get; set; }
+        public long FEMALE { get; set; }
     }
 }
