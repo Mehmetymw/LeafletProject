@@ -1,4 +1,4 @@
-﻿var map = L.map('map').setView([-40, 146], 5);
+﻿var map = L.map('map', { zoomControl: false}).setView([-40, 146], 5);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -11,192 +11,6 @@ var polyline;
 var isClickEnabled = false;
 
 
-
-var handleDrawClickListener = document.addEventListener("click", function () {
-    if (isClickEnabled) {
-        enabledBtns();
-        if (clickedBtn != undefined) {
-            map.on("click", handleDraw);
-        }
-    }
-
-    else {
-        disableBtns();
-        map.off("click", handleDraw);
-    }
-})
-
-
-
-var editButton = document.getElementById("btn-draw");
-editButton.addEventListener("click", function () {
-    isClickEnabled = !isClickEnabled;
-    editButton.innerHTML = isClickEnabled ? "Stop" : "Edit";
-})
-
-const leftPanel = document.getElementById('left-panel');
-
-document.getElementById("btn-toggle").addEventListener("click",
-    function () {
-        var btns = document.getElementsByClassName("leftpanel-btn");
-
-        if (leftPanel.style.width === '6%') {
-            leftPanel.style.width = '300px';
-            leftPanel.style.height = '250px';
-
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].style.display = 'block';
-            }
-        } else {
-            leftPanel.style.width = '6%';
-            leftPanel.style.height = '6%';
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].style.display = 'none';
-            }
-        }
-
-    });
-function togglePanel() {
-    leftPanel.classList.toggle('hidden');
-}
-var btns = document.getElementsByClassName("editpanel-btn");
-disableBtns();
-
-function disableBtns() {
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].style.display = 'none';
-    }
-}
-
-function enabledBtns() {
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].style.display = 'block';
-    }
-}
-
-var clickedBtn;
-
-var polygonBtn = document.getElementById("editpanel-Polygon");
-polygonBtn.addEventListener('click', function () {
-    clearMap();
-    clickedBtn = polygonBtn;
-});
-
-var polylineBtn = document.getElementById("editpanel-Polyline");
-document.getElementById("editpanel-Polyline").addEventListener('click', function () {
-    clearMap();
-    clickedBtn = polylineBtn;
-});
-
-var pointBtn = document.getElementById("editpanel-Point");
-document.getElementById("editpanel-Point").addEventListener('click', function () {
-    clearMap();
-    clickedBtn = pointBtn;
-});
-
-var popupBtn = document.getElementById("editpanel-Popup");
-document.getElementById("editpanel-Popup").addEventListener('click', function () {
-    clearMap();
-    clickedBtn = popupBtn;
-
-});
-
-function clearMap() {
-    coordList = [];
-
-    map.off("click", handleDraw);
-
-}
-
-activeBtn = document.getElementById("")
-var resetButton = document.getElementById("btn-reset");
-resetButton.addEventListener('click', function () {
-    // Çizimleri sıfırlamak için tüm katmanları temizle
-    map.eachLayer(function (layer) {
-        if (layer instanceof L.Polygon || layer instanceof L.Polyline || layer instanceof L.Point || layer instanceof L.Marker) {
-            map.removeLayer(layer);
-        }
-    });
-
-    // Koordinatları ve poligonu sıfırla
-    coordList = [];
-    polygon = undefined;
-    editButton.innerHTML = "Edit";
-    isClickEnabled = false;
-    clickedBtn = undefined;
-
-});
-
-var marker;
-function handleDraw(e) {
-    var lat = e.latlng.lat;
-    var lng = e.latlng.lng;
-    var latLngArray = [lat, lng];
-
-    //marker = new L.marker([lat, lng]).addTo(map);
-    //marker.bindPopup(latLngArray + ' ' + "Noktasına Tıkladınız").openPopup();
-    coordList.push(latLngArray);
-
-    if (clickedBtn != undefined) {
-        switch (clickedBtn) {
-            case polygonBtn:
-                CreatePolygon();
-                break;
-            case polylineBtn:
-                CreatePolyline();
-                break;
-            case pointBtn:
-                var marker = L.marker(latLngArray).addTo(map);
-                break;
-            case popupBtn:
-                var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        var popupContent = data.display_name;
-
-                        var popup = L.popup()
-                            .setContent(popupContent)
-                            .setLatLng(latLngArray)
-                            .openPopup().addTo(map);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    })
-
-
-
-                break;
-        }
-
-    }
-}
-
-function CreatePolygon() {
-    if (coordList.length > 2) {
-        if (typeof polygon !== 'undefined') {
-            map.removeLayer(polygon);
-        }
-        polygon = L.polygon(coordList, { color: 'red' }).addTo(map);
-    }
-}
-
-function CreatePolyline() {
-    if (coordList.length > 1) {
-        if (typeof polyline !== 'undefined') {
-            map.removeLayer(polyline);
-        }
-        polyline = L.polyline(coordList, { color: 'red' }).addTo(map);
-    }
-}
-
-function DeleteMarker() {
-    marker.remove();
-}
-
-function AddMarker() {
-
-}
 
 var geoJsonContent;
 document.getElementById("btn-opengeojson").addEventListener('change', function (e) {
@@ -352,7 +166,7 @@ function sendDateToGeoServer(data) {
 map.on("click", function (e) {
     var lat = e.latlng.lat;
     var lng = e.latlng.lng;
-    onGetFeatureInfo(lat, lng);
+    //onGetFeatureInfo(lat, lng);
 });
 
 var Properties;
@@ -393,16 +207,15 @@ function onGetFeatureInfo(lat, lng) {
                     data: JSON.stringify( USData),
                     contentType: "application/json",
                     success: function (data) {
+                        var form = $('#attrForm');
+                        form.html(data);
+                        form.show();
 
-                        $("#attrForm").html(data);
                     },
                     error: function () {
                         alert("Veri çekme işlemi sırasında bir hata oluştu.");
                     }
                 });
-
-                console.log(data);
-                displayAttrTable();
             }
         },
         error: function (error) {
@@ -410,24 +223,86 @@ function onGetFeatureInfo(lat, lng) {
         }
     });
 }
+$("#layerList-Toggler").on("click", function (e) {
+    e.preventDefault();
+    $('#rigtpanel-Layerlist').slideToggle("slow");
+})
+$('#user').on('click', function () {
+    $('#userDropdown').toggle();
+})
 
-function displayAttrTable(){
-    var form = $('#attrForm');
-    form.show();
+var Message = $('#Message');
 
-}
+//CREATE POLYGON
+var DrawGeometryType;
+var CoordList = [];
+var polygon = undefined;
+$('#drawPolygon').on('click', function () {
+    map.on('click', function (e) {
+        DrawGeometryType = 'Polygon';
+        Message.html(DrawGeometryType +' '+ "Çizimi");
+        Message.show();
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng
+        var latLng = [lat, lng];
+        CoordList.push(latLng);
+        if (polygon != undefined)
+            polygon.remove();
 
-
-$(function () {
-    $('#btnAsena').click(function () {
-        $('#attrForm').hide();
+        if (CoordList.length > 2) {
+            polygon = L.polygon(CoordList);
+            polygon.addTo(map);
+        }
     })
 })
-$(function () {
-    $("#attrForm").draggable();
-   
-})
-$(function () {
-    $("#attrForm").resizable();
+var polyline = undefined;
+$('#drawPolyline').on('click', function () {
+    map.on('click', function (e) {
+        DrawGeometryType = 'Polyline';
+        Message.html(DrawGeometryType + ' ' + "Çizimi");
+        Message.show();
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng
+        var latLng = [lat, lng];
+        CoordList.push(latLng);
+        if (polyline != undefined)
+            polyline.remove();
+        if (CoordList.length > 1) {
+            polyline = L.polyline(CoordList);
+            polyline.addTo(map);
+        }
+    })
 })
 
+var drawButtons = $('.drawItems button');
+drawButtons.on('click', function () {
+    MessageReset();
+    
+})
+function MessageReset() {
+    if (polygon != undefined) {
+        polygon = undefined;
+    }
+    if (polyline != undefined)
+        polyline = undefined;
+    DrawGeometryType = '';
+    Message.html("");
+    Message.hide();
+    CoordList = [];
+}
+if (document.addEventListener) {
+    document.addEventListener('contextmenu', function (e) {
+        var polygon = turf.polygon(CoordList);
+        var area = turf.area(polygon);
+        console.log(area);
+        MessageReset();
+        map.off('click');
+        e.preventDefault();
+    }, false);
+} else {
+    document.attachEvent('oncontextmenu', function () {
+        MessageReset();
+        map.off('click');
+        window.event.returnValue = false;
+    });
+}

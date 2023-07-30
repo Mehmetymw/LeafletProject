@@ -1,5 +1,6 @@
 ﻿html {
     font-size: 14px;
+    user-select: none;
 }
 
 @media (min-width: 768px) {
@@ -20,16 +21,18 @@ html {
 body {
     margin-bottom: 60px;
 }
-#btn-draw{
-    width:270px
+
+#btn-draw {
+    width: 270px
 }
-.editpanel-btn{
-    display:block;
-    margin:2px;
-    
+
+.editpanel-btn {
+    display: block;
+    margin: 2px;
 }
+
 #edit-panel {
-    left:50px;
+    left: 50px;
     padding: 50px 0px 0px 40%;
     width: auto;
     z-index: 1000;
@@ -48,6 +51,7 @@ body {
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
     width: 20px;
@@ -57,13 +61,15 @@ body {
     font-size: 16px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 #map {
     float: left;
     width: 100%;
     height: 100vh;
-    transition: width 0.3s ease; 
+    transition: width 0.3s ease;
 }
-.leftpanel-btn.hidden{
+
+.leftpanel-btn.hidden {
     width: 0;
 }
 
@@ -72,13 +78,16 @@ body {
     border-color: #0E6EFD;
     border-radius: 3px 4px;
     color: black;
-
 }
+
 #btn-opengeojson {
-    overflow:hidden;
+    overflow: hidden;
 }
-
+#userDropdown{
+}
 #layer-panel {
+    background-color: #212529;
+    opacity: 0.8;
     height: 145px;
     width: 160px;
     position: fixed;
@@ -89,11 +98,137 @@ body {
     border-radius: 5px;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    display:block;
+    display: block;
 }
-#layer-panel.hidden{
-    display:none;
+
+    #layer-panel.hidden {
+        display: none;
+    }
+
+.form-check-label {
+    user-select: none;
 }
-.form-check-label{
-    user-select:none;
+
+#top-panel {
+    position: fixed;
+    z-index: 1001;
+    width: 100%;
+    height: 35px;
+    border-bottom: 1px solid grey;
+    opacity: 0.75;
+    float: none;
+    display: flex;
+    justify-content: space-between;
 }
+
+.navbar-brand {
+    float: left;
+}
+
+#topTitle {
+}
+
+#user {
+    color: black;
+}
+
+#rigtpanel-Layerlist {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 35px;
+    z-index: 1000;
+    background-color: #212529;
+    opacity: 0.75;
+    user-select: none;
+    height: 100vh;
+}
+
+#layerList-Toggler {
+    z-index: 1000;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    background-color: black;
+    opacity: 1;
+    width: 280px;
+    height: 30px;
+    border-radius: 5px;
+} 
+.layerList-Titles{
+    color:white;
+    display:flex;
+    justify-content:center;
+}
+#rigtpanel-Layerlist a {
+}
+
+#layerList{
+    display:inline-block;
+    position:relative;
+    top:450px;
+    right:0;
+}
+#layerList a:hover{
+    background-color: grey;
+}
+
+.drawItems {
+    height: 50px;
+    justify-content: space-between;
+    background-color: #212529;
+    margin-bottom: 30px;
+}
+
+    .drawItems button {
+        position: relative;
+        left: 8px;
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        justify-content: space-between;
+        background-color: #212529;
+        border: 1px solid grey;
+    }
+
+        .drawItems button:hover {
+            background-color: grey;
+        }
+
+    .drawItems i {
+        color: #ffffff;
+    }
+
+.calcItems {
+    height: 50px;
+    justify-content: space-between;
+    background-color: #212529;
+    margin-bottom: 30px;
+}
+
+    .calcItems button {
+        position: relative;
+        left: 8px;
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        justify-content: space-between;
+        background-color: #212529;
+        border: 1px solid grey;
+    }
+
+        .calcItems button:hover {
+            background-color: grey;
+        }
+
+    .calcItems i {
+        color: #ffffff;
+    }
+
+#user {
+    cursor: pointer;
+}
+
+    #user:hover {
+        background-color:none;
+    }

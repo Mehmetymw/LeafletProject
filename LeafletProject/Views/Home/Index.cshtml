@@ -4,42 +4,21 @@
 <html>
 <head>
     <title>Leaflet Harita Örneği</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/0.0.124/turf.min.js" integrity="sha512-jpnZ8xGKbS7L9S6d5fk/zDVgF6OoVKLMoEliLxf24BRX+orWhxqJuUcoM+vGmOaozS9dD9ABjQZKAgjjcwTndA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
 </head>
 <body>
-
-    <div id="left-panel" class="d-flex flex-column flex-shrink-0 p-3 bg-light">
-        <button id="btn-toggle">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        </a>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li>
-                <a id="btn-draw" href="#" class="leftpanel-btn nav-link active" aria-current="page">
-                    Draw
-                </a>
-            </li>
-            <li>
-                <a id="btn-reset" href="#" class="leftpanel-btn nav-link link-dark">
-                    Reset
-                </a>
-            </li>
-            <li>
-                <a id="btn-layers" href="#" class="leftpanel-btn nav-link link-dark">
-                    Layers
-                </a>
-            </li>
-            <li>
-                <input type="file" id="btn-opengeojson" href="#" class="leftpanel-btn nav-link link-dark" action="get" accept=".json" />
-            </li>
-        </ul>
-    </div>
+    <partial name="TopNavbar" />
+    
+   
     <div id="layer-panel">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="cbIl" checked>
@@ -73,23 +52,10 @@
         </div>
     </div>
 
-    <partial name="Properties" model="@Model">
+    <partial name="Properties" model="@Model"/>
     
-
         <div id="map">
         </div>
-
-        <div id="edit-panel" class="nav nav-pills nav-justified">
-            <button id="editpanel-Polygon" type="button" class="editpanel-btn btn btn-secondary">Polygon</button>
-            <button id="editpanel-Polyline" type="button" class="editpanel-btn btn btn-secondary">Polyline</button>
-            <button id="editpanel-Point" type="button" class="editpanel-btn btn btn-secondary">Point</button>
-            <button id="editpanel-Popup" type="button" class="editpanel-btn btn btn-secondary">Popup</button>
-
-        </div>
-
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
         <script src="~/js/site.js">
         </script>
 

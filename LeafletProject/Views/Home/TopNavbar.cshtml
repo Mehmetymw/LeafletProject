@@ -1,0 +1,100 @@
+﻿<html>
+<head>
+    <link href="~/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav id="top-panel" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a id="topTitle" class="navbar-brand">GeoWeb</a>
+        <a  id="Message" class="navbar-brand" style="display:none">İşlemler</a>
+        <div id="layerList-Toggler" style="justify-content:center">
+            <i class="fa-solid fa-caret-down fa-2xl" style="margin-left:48%; color: #ffffff;"></i>
+        </div>
+                
+
+        <div id="rigtpanel-Layerlist">
+            <hr />
+            <h5 class="layerList-Titles">Çizim</h5>
+
+            <div class="drawItems">
+                <button id="drawPolygon" type="button">
+                    <i class="fa-regular fa-square-full"></i>
+                </button>
+                <button id="drawPolyline">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+                <button id="drawPoint">
+                    <i class="fa-solid fa-location-dot"></i>
+                </button>
+                <button id="drawPopup">
+                    <i class="fa-regular fa-comment"></i>
+                </button>
+                <button id="drawClear">
+                    <i class="fa-solid fa-trash-can-arrow-up"></i>
+                </button>
+            </div>
+            <hr style="border-top:1px solid white">
+            <h5 class="layerList-Titles">Ölçüm</h5>
+            <div class="calcItems">
+                <button id="calcDistance">
+                    <i class="fa-solid fa-ruler"></i>
+                </button>
+                <button id="calcArea">
+                    <i class="fa-solid fa-square-full"></i>
+                </button>
+                <button id="drawPoint">
+                    <i class="fa-solid fa-question"></i>
+                </button>
+                <button id="drawPopup">
+                    <i class="fa-solid fa-question"></i>
+                </button>
+                <button id="drawBos">
+                    <i class="fa-solid fa-question"></i>
+                </button>
+            </div>
+            <hr />
+            <div id="layerList" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li>
+                        <a id="btn-layers" href="#" class="leftpanel-btn nav-link link-light">
+                            Layers
+                        </a>
+                    </li>
+                    <li>
+                        <input type="file" id="btn-opengeojson" href="#" class="leftpanel-btn nav-link link-dark" action="get" accept=".json" />
+                    </li>
+                </ul>
+                <hr>
+                <div id="user" class="dropdown">
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                            <img src="https://github.com/mehmetymw.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>Mehmetymw</strong>
+                        </button>
+                    </div>
+                    <div id="userDropdown" class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class=" dropdown-item" href="#">Sign Out</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+</body>
+</html>
+
+
+
