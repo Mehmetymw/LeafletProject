@@ -1,15 +1,14 @@
-﻿var map = L.map('map', { zoomControl: false}).setView([-40, 146], 5);
+﻿var map = L.map('map', {
+    zoomControl: false
+}).setView([-40, 146], 5);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var coordList = [];
-var polygon;
-var polyline;
-var isClickEnabled = false;
 
+var isClickEnabled = false;
 
 
 var geoJsonContent;
@@ -292,9 +291,23 @@ function MessageReset() {
 }
 if (document.addEventListener) {
     document.addEventListener('contextmenu', function (e) {
-        var polygon = turf.polygon(CoordList);
-        var area = turf.area(polygon);
-        console.log(area);
+        var ResultArray = CoordList;
+        if (ResultArray.length > 1) {
+            ResultArray.push(CoordList[0]);
+            if (DrawGeometryType == 'Polygon') {
+                ResultArray = [ResultArray];
+
+                var polygon = turf.polygon(ResultArray);
+                var area = turf.area(polygon);
+                console.log(area.toFixed(2));
+            }
+            else if (DrawGeometryType == 'Polyline') {
+                var line= turf.lineString(ResultArray);
+                var options = { units: 'kilometers' };
+                var length = turf.length(line, options);
+                console.log(length.toFixed(2));
+            }
+        }
         MessageReset();
         map.off('click');
         e.preventDefault();
